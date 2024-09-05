@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Form from "@components/Form";
 import { useRouter } from 'next/navigation';
 
+
 const CreatePrompt = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -13,8 +14,14 @@ const CreatePrompt = () => {
     prompt: "",
     tag: "",
   });
+ 
   const createprompt = async (e) => {
     e.preventDefault();
+    if (!session) {
+      console.log("User is not authenticated");
+      return;
+    }
+    console.log(session);
     setSubmitting(true);
     try {
       const reponse = await fetch("/api/prompt/new", {
@@ -23,7 +30,7 @@ const CreatePrompt = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: session?.user.id,
+          userId: session?.user?.id,
           prompt: post.prompt,
           tag: post.tag,
         }),
