@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-const PrompCard = ({ post, handlerTag, handlerEdit, handlerDelete }) => {
+const PromptCard = ({ post, handlerTag, handlerEdit, handlerDelete }) => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const router = useRouter();
@@ -68,4 +68,4 @@ const PrompCard = ({ post, handlerTag, handlerEdit, handlerDelete }) => {
   );
 };
 
-export default PrompCard;
+export default PromptCard;

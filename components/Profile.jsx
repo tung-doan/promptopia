@@ -1,4 +1,4 @@
-import PrompCard from "./PrompCard";
+import PromptCard from "./PrompCard";
 
 const MyProfile = ({ name, description, data, handlerEdit, handlerDelete }) => {
   return (
@@ -10,7 +10,7 @@ const MyProfile = ({ name, description, data, handlerEdit, handlerDelete }) => {
       <p className="desc text-left">{description}</p>
       <div className="mt-10 prompt_layout">
         {data.map((post) => (
-          <PrompCard 
+          <PromptCard 
           key={post._id}
           post={post}
           handlerEdit={handlerEdit ? () => handlerEdit(post) : undefined}  
