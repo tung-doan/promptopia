@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import  MyProfile  from "../../components/Profile";
+import { useRouter, useParams } from "next/navigation";
+import MyProfile from "@components/Profile";
 
 const Page = () => {
   const router = useRouter();
+  const { id } = useParams();
   const { data: session, status } = useSession();
   const [Data, setData] = useState([]);
   // useEffect(()=>{
@@ -42,19 +43,18 @@ const Page = () => {
   };
   const handlerDelete = (Data) => {
     const hasConfirmed = confirm("Are you sure you want to delete this post?");
-    if(hasConfirmed){
-        try{
-            const response = fetch(`/api/prompt/${Data._id}`, {
-                method: "DELETE"
-            })
-            
-                const newPost = Data.filter((post) => post._id !== Data._id);
-                console.log(newPost);
-                setData(newPost); 
-            
-        }catch(error){
-            console.error("Error deleting post:", error);
-        }
+    if (hasConfirmed) {
+      try {
+        const response = fetch(`/api/prompt/${Data._id}`, {
+          method: "DELETE",
+        });
+
+        const newPost = Data.filter((post) => post._id !== Data._id);
+        console.log(newPost);
+        setData(newPost);
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
     }
   };
   return (

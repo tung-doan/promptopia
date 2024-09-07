@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PrompCard from "./PrompCard";
+import { set } from "mongoose";
 
 const Feed = () => {
   const [Posts, setPosts] = useState([]);
@@ -49,6 +50,15 @@ const Feed = () => {
     );
   };
 
+  const handlerTag = (tagname) => {
+    const regex = new RegExp(tagname, "i");
+    setSearchText(tagname);
+    const filteredTag =  Posts.filter((post) => 
+        regex.test(post.tag) 
+    );
+    setFilteredPosts(filteredTag);
+  }
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -79,11 +89,11 @@ const Feed = () => {
         </div>
       </form>
       {!searchText ? (
-        <PromptCardList data={Posts} handlerTag={() => {}}></PromptCardList>
+        <PromptCardList data={Posts} handlerTag={(e)=> handlerTag(e)}></PromptCardList>
       ) : (
         <PromptCardList
           data={FilteredPosts}
-          handlerTag={() => {}}
+          handlerTag={(e) => handlerTag(e)}
         ></PromptCardList>
       )}
     </section>
