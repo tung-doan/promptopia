@@ -1,8 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const PrompCard = ({ post, handlerTag, handlerEdit, handlerDelete }) => {
+  const { data: session } = useSession();
+  const pathname = usePathname();
+  const router = useRouter();
   const [Copied, setCopied] = useState("");
   const handlerCopy = () => {
     setCopied(post.prompt);
@@ -46,7 +51,19 @@ const PrompCard = ({ post, handlerTag, handlerEdit, handlerDelete }) => {
       <p className="font-satoshi text-gray-700 text-sm my-4 ">
         {post.prompt}
       </p>
-      <p className="font-inter text-sm blue_gradient cursor-pointer " onClick={() => handlerTag && handlerTag(post.tag)}>{post.tag}</p>
+      <p className="font-inter text-sm blue_gradient cursor-pointer " onClick={() => handlerTag && handlerTag(post.tag)}>#{post.tag}</p>
+
+      {session?.user.id === post.creator._id && pathname === '/profile' && (
+        <div className="flex-center border-gray-300 border-t pt-3 gap-4">
+          <p className="font-inter text-sm green_gradient cursor-pointer mt-4" onClick={handlerEdit}>
+            Edit
+          </p>
+          <p className="font-inter text-sm orange_gradient cursor-pointer mt-4" onClick={handlerDelete}>
+            Delete
+          </p>
+        </div>
+      )
+      }
     </div>
   );
 };

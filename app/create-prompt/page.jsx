@@ -24,7 +24,7 @@ const CreatePrompt = () => {
     console.log(session);
     setSubmitting(true);
     try {
-      const reponse = await fetch("/api/prompt/new", {
+      const response = await fetch("/api/prompt/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const CreatePrompt = () => {
           tag: post.tag,
         }),
       });
-      if(reponse.ok){
+      if(response.ok){
         router.push("/");
       }
     } catch (error) {
