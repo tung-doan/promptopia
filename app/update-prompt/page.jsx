@@ -22,10 +22,9 @@ const EditPrompt = () => {
         prompt: data.prompt,
         tag: data.tag,
       });
-      console.log(Post);
     };
     if (searchID) fetchData();
-  }, [searchParams.get("id")]);
+  }, [searchID]);
 
   const UpdatePrompt = async (e) => {
     e.preventDefault();
