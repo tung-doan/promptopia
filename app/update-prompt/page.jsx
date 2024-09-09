@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const EditPrompt = () => {
   const searchParams = useSearchParams();
+  const searchID = searchParams.get("id");
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [Post, setPost] = useState({
@@ -15,7 +16,7 @@ const EditPrompt = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/prompt/${searchParams.get("id")}`);
+      const response = await fetch(`/api/prompt/${searchID}`);
       const data = await response.json();
       setPost({
         prompt: data.prompt,
@@ -23,14 +24,14 @@ const EditPrompt = () => {
       });
       console.log(Post);
     };
-    if (searchParams.get("id")) fetchData();
+    if (searchID) fetchData();
   }, [searchParams.get("id")]);
 
   const UpdatePrompt = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const response = await fetch(`/api/prompt/${searchParams.get('id')}`, {
+      const response = await fetch(`/api/prompt/${searchID}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
